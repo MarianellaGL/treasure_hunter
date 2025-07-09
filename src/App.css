@@ -1,0 +1,1171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body,
+html {
+  background: #000 !important;
+  color: #00ff00;
+  font-family: "Inter", "Arial", sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+/* Neobrutalismo: bordes gruesos, sombra dura, sin gradientes */
+.neobrutal-card {
+  @apply bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6 rounded-none;
+}
+
+.neobrutal-btn {
+  @apply bg-[#00FF00] text-black font-bold border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200 active:shadow-none active:translate-x-[4px] active:translate-y-[4px];
+}
+
+.neobrutal-input {
+  @apply bg-black text-[#00FF00] font-mono border-4 border-[#00FF00] shadow-[4px_4px_0px_0px_rgba(0,255,0,0.3)] focus:shadow-[2px_2px_0px_0px_rgba(0,255,0,0.5)] focus:translate-x-[2px] focus:translate-y-[2px] transition-all duration-200;
+  min-height: 50px;
+  outline: none;
+}
+
+.neobrutal-title {
+  @apply font-bold text-black text-2xl md:text-3xl;
+}
+
+.neobrutal-shadow {
+  box-shadow: 4px 4px 0 #00ff00 !important;
+}
+
+/* Terminal */
+.terminal {
+  background: #000;
+  border: 4px solid #fff;
+  box-shadow: 4px 4px 0 #00ff00;
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 1rem;
+  min-height: 220px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+.terminal-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.terminal-dot {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #00ff00;
+}
+.terminal-cursor {
+  display: inline-block;
+  width: 1ch;
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+}
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Progreso */
+.progress-bar {
+  @apply w-full bg-gray-800 border-4 border-[#00FF00] h-8 rounded-none relative overflow-hidden;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(90deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
+  overflow: hidden;
+}
+
+.progress-bar-inner {
+  @apply bg-[#00FF00] h-full transition-all duration-1000 ease-out relative;
+  box-shadow: 0 0 15px #00ff00;
+  background-color: #00ff00;
+  overflow: hidden;
+}
+
+.progress-bar-inner.animate-pulse-glow {
+  animation: progress-pulse 2s ease-in-out infinite;
+}
+
+/* Efecto de loading para progreso 0 */
+.progress-bar.loading .progress-bar-inner {
+  width: 30% !important;
+  animation: progress-loading 2s ease-in-out infinite;
+}
+
+@keyframes progress-loading {
+  0%,
+  100% {
+    width: 30%;
+    opacity: 0.7;
+  }
+  50% {
+    width: 70%;
+    opacity: 1;
+  }
+}
+
+/* Efecto de escaneo en la barra */
+.progress-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 0, 0.3),
+    transparent
+  );
+  animation: progress-scan 2.5s ease-in-out infinite;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Efecto de partículas flotantes */
+.progress-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+      circle at 20% 50%,
+      rgba(0, 255, 0, 0.1) 1px,
+      transparent 1px
+    ),
+    radial-gradient(
+      circle at 80% 30%,
+      rgba(0, 255, 0, 0.1) 1px,
+      transparent 1px
+    ),
+    radial-gradient(
+      circle at 40% 70%,
+      rgba(0, 255, 0, 0.1) 1px,
+      transparent 1px
+    );
+  background-size: 50px 50px, 30px 30px, 40px 40px;
+  animation: progress-particles 4s linear infinite;
+  z-index: 0;
+}
+
+@keyframes progress-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 15px #00ff00;
+  }
+  50% {
+    box-shadow: 0 0 25px #00ff00, 0 0 35px #00ff00,
+      0 0 45px rgba(0, 255, 0, 0.5);
+  }
+}
+
+@keyframes progress-scan {
+  0% {
+    left: -100%;
+}
+  50% {
+    left: 0%;
+  }
+  100% {
+    left: 0%;
+  }
+}
+
+@keyframes progress-particles {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(50px);
+  }
+}
+
+/* Efecto de completion cuando llega al 100% */
+.progress-bar.completed .progress-bar-inner {
+  animation: progress-complete 1s ease-out,
+    progress-pulse 2s ease-in-out infinite;
+}
+
+@keyframes progress-complete {
+  0% {
+    transform: scaleX(0.98);
+  }
+  50% {
+    transform: scaleX(1.02);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+/* Clues */
+.clue-card {
+  @apply bg-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-4 rounded-none transition-all duration-200 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px];
+}
+.clue-card.selected {
+  @apply bg-yellow-300 border-yellow-500;
+}
+.clue-card.found {
+  @apply bg-[#00FF00] border-[#00FF00];
+}
+
+/* Mobile first: todo 100% ancho, paddings grandes */
+@media (max-width: 640px) {
+  .neobrutal-card,
+  .clue-card,
+  .terminal {
+    padding: 1.5rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+  }
+  .neobrutal-title {
+    font-size: 2rem;
+  }
+  .neobrutal-btn {
+    font-size: 1.1rem;
+    padding: 1rem 1.5rem;
+    min-height: 70px;
+  }
+  .clue-card {
+    min-height: 100px;
+    padding: 1.2rem;
+  }
+}
+
+/* iPhone específico */
+@media (max-width: 375px) {
+  .neobrutal-card {
+    padding: 1.2rem;
+}
+  .neobrutal-title {
+    font-size: 1.8rem;
+  }
+  .neobrutal-btn {
+    font-size: 1rem;
+    padding: 0.8rem 1.2rem;
+    min-height: 60px;
+  }
+}
+
+/* Minimalismo: quitar decoraciones innecesarias */
+::-webkit-scrollbar {
+  width: 0.5em;
+  background: #111;
+}
+::-webkit-scrollbar-thumb {
+  background: #00ff00;
+  border-radius: 8px;
+}
+
+/* Iconos grandes y simples */
+.icon-xl {
+  @apply text-2xl;
+}
+
+/* Mejorar experiencia touch en iOS */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+.clue-card {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@keyframes matrix {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px currentColor;
+  }
+  50% {
+    box-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+}
+
+.animate-matrix {
+  animation: matrix 2s linear infinite;
+}
+
+.animate-glitch {
+  animation: glitch 0.3s ease-in-out;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Estilos personalizados para la terminal */
+.terminal-text {
+  text-shadow: 0 0 5px #00ff00;
+}
+
+/* Efecto de escaneo */
+.scan-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.scan-line::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00ff00, transparent);
+  animation: scan 2s linear infinite;
+}
+
+@keyframes scan {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Efecto de distorsión */
+.distortion {
+  filter: contrast(1.2) brightness(1.1);
+}
+
+/* Estilos para botones de hack */
+.hack-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.hack-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.hack-button:hover::before {
+  left: 100%;
+}
+
+/* Estilos para el texto de la matriz */
+.matrix-text {
+  font-family: "Courier New", monospace;
+  color: #00ff00;
+  text-shadow: 0 0 5px #00ff00;
+}
+
+/* Estilos para el fondo */
+.hacker-bg {
+  background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+}
+
+/* Estilos para los bordes brillantes */
+.glow-border {
+  border: 2px solid;
+  box-shadow: 0 0 10px currentColor;
+}
+
+/* Estilos para el texto de error */
+.error-text {
+  color: #ff0000;
+  text-shadow: 0 0 5px #ff0000;
+  animation: glitch 0.3s ease-in-out;
+}
+
+/* Estilos para el texto de éxito */
+.success-text {
+  color: #00ff00;
+  text-shadow: 0 0 5px #00ff00;
+  animation: pulse-glow 1s ease-in-out;
+}
+
+/* Terminal animations */
+.terminal-line {
+  @apply transition-all duration-300 ease-out;
+  animation: fadeInUp 0.3s ease-out forwards;
+}
+
+.cursor-blink {
+  animation: blink 1s infinite;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Eliminar scroll y ajustar altura */
+body {
+  overflow-x: hidden;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+/* Ajustes para móviles */
+@media (max-width: 768px) {
+  .neobrutal-card {
+    @apply p-4;
+  }
+
+  .neobrutal-title {
+    @apply text-xl;
+  }
+
+  .neobrutal-btn {
+    @apply text-lg py-4 px-6;
+  }
+}
+
+/* Code IDE Styles */
+.code-ide {
+  @apply bg-black border-4 border-[#00FF00] shadow-[8px_8px_0px_0px_rgba(0,255,0,0.3)] rounded-none;
+  font-family: "Courier New", monospace;
+}
+
+.code-ide-header {
+  @apply bg-[#00FF00] text-black p-3 flex justify-between items-center border-b-4 border-black;
+}
+
+.code-editor-container {
+  @apply relative flex bg-black;
+  min-height: 200px;
+}
+
+.line-numbers {
+  @apply bg-gray-900 text-gray-500 text-xs p-3 select-none border-r-2 border-gray-700;
+  min-width: 50px;
+  font-family: "Courier New", monospace;
+}
+
+.line-number {
+  @apply text-right;
+  line-height: 1.5;
+}
+
+.code-textarea {
+  @apply bg-transparent text-[#00FF00] p-3 flex-1 resize-none outline-none border-none;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  tab-size: 2;
+}
+
+.code-textarea::placeholder {
+  @apply text-gray-600;
+}
+
+.code-highlight {
+  @apply absolute top-0 left-0 p-3 pointer-events-none;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  z-index: 1;
+}
+
+.terminal-output {
+  @apply bg-gray-900 border-t-4 border-[#00FF00];
+}
+
+.terminal-header {
+  @apply bg-[#00FF00] text-black p-2 flex justify-between items-center;
+}
+
+.terminal-content {
+  @apply p-3 text-[#00FF00] text-sm max-h-32 overflow-y-auto;
+  font-family: "Courier New", monospace;
+}
+
+.terminal-line {
+  @apply mb-1;
+  animation: fadeInUp 0.2s ease-out;
+}
+
+/* Matrix theme specific styles */
+.matrix-theme .code-textarea {
+  text-shadow: 0 0 5px #00ff00;
+}
+
+.matrix-theme .code-highlight {
+  text-shadow: 0 0 5px #00ff00;
+}
+
+.matrix-theme .terminal-content {
+  text-shadow: 0 0 3px #00ff00;
+}
+
+/* Syntax highlighting colors for matrix theme */
+.matrix-theme .text-blue-400 {
+  color: #00ffff;
+  text-shadow: 0 0 5px #00ffff;
+}
+
+.matrix-theme .text-yellow-400 {
+  color: #ffff00;
+  text-shadow: 0 0 5px #ffff00;
+}
+
+.matrix-theme .text-purple-400 {
+  color: #ff00ff;
+  text-shadow: 0 0 5px #ff00ff;
+}
+
+.matrix-theme .text-green-400 {
+  color: #00ff00;
+  text-shadow: 0 0 5px #00ff00;
+}
+
+.matrix-theme .text-orange-400 {
+  color: #ff8800;
+  text-shadow: 0 0 5px #ff8800;
+}
+
+.matrix-theme .text-gray-500 {
+  color: #666666;
+}
+
+/* Cursor animation for code editor */
+.code-textarea:focus {
+  caret-color: #00ff00;
+}
+
+/* Scrollbar for terminal */
+.terminal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.terminal-content::-webkit-scrollbar-track {
+  @apply bg-gray-800;
+}
+
+.terminal-content::-webkit-scrollbar-thumb {
+  @apply bg-[#00FF00];
+  border-radius: 4px;
+}
+
+.terminal-content::-webkit-scrollbar-thumb:hover {
+  @apply bg-[#00CC00];
+}
+
+/* Responsive design for mobile */
+@media (max-width: 640px) {
+  .code-ide {
+    @apply mx-2;
+  }
+
+  .code-editor-container {
+    min-height: 150px;
+  }
+
+  .code-textarea,
+  .code-highlight {
+    font-size: 12px;
+  }
+
+  .line-numbers {
+    min-width: 40px;
+    font-size: 10px;
+  }
+}
+
+/* Mini IDE Styles - Versión compacta */
+.mini-ide {
+  @apply bg-black border-2 border-[#00FF00] shadow-[4px_4px_0px_0px_rgba(0,255,0,0.3)] rounded-none;
+  font-family: "Courier New", monospace;
+}
+
+.mini-ide-header {
+  @apply bg-[#00FF00] text-black p-2 flex justify-between items-center border-b-2 border-black;
+}
+
+.mini-editor {
+  @apply bg-black;
+  min-height: 120px;
+}
+
+.mini-textarea {
+  @apply bg-transparent text-[#00FF00] p-3 w-full resize-none outline-none border-none;
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.4;
+  min-height: 120px;
+  text-shadow: 0 0 3px #00ff00;
+}
+
+.mini-textarea::placeholder {
+  @apply text-gray-600;
+}
+
+.mini-textarea:focus {
+  caret-color: #00ff00;
+}
+
+.mini-output {
+  @apply bg-gray-900 border-t-2 border-[#00FF00];
+}
+
+.mini-output-header {
+  @apply bg-[#00FF00] text-black p-1 flex justify-between items-center text-xs;
+}
+
+.mini-output-content {
+  @apply p-2 text-[#00FF00] text-xs max-h-20 overflow-y-auto;
+  font-family: "Courier New", monospace;
+  text-shadow: 0 0 2px #00ff00;
+}
+
+.mini-output-line {
+  @apply mb-1;
+  animation: fadeInUp 0.2s ease-out;
+}
+
+/* Responsive para mobile */
+@media (max-width: 640px) {
+  .mini-ide {
+    @apply mx-1;
+  }
+
+  .mini-editor {
+    min-height: 100px;
+  }
+
+  .mini-textarea {
+    font-size: 11px;
+    min-height: 100px;
+  }
+
+  .mini-output-content {
+    max-height: 16px;
+  }
+}
+
+/* Professional IDE Styles - Monaco Editor */
+.professional-ide {
+  @apply bg-black border-4 border-[#00FF00] shadow-[8px_8px_0px_0px_rgba(0,255,0,0.3)] rounded-none;
+  font-family: "Courier New", monospace;
+}
+
+.professional-ide-header {
+  @apply bg-[#00FF00] text-black p-3 flex justify-between items-center border-b-4 border-black;
+}
+
+.professional-editor {
+  @apply bg-black;
+  border: none;
+}
+
+.professional-terminal {
+  @apply bg-gray-900 border-t-4 border-[#00FF00];
+}
+
+.professional-terminal-header {
+  @apply bg-[#00FF00] text-black p-2 flex justify-between items-center;
+}
+
+.professional-terminal-content {
+  @apply p-3 text-[#00FF00] text-sm max-h-32 overflow-y-auto;
+  font-family: "Courier New", monospace;
+  text-shadow: 0 0 3px #00ff00;
+}
+
+.professional-terminal-line {
+  @apply mb-1;
+  animation: fadeInUp 0.2s ease-out;
+}
+
+/* Monaco Editor customizations */
+.monaco-editor {
+  padding: 0 !important;
+}
+
+.monaco-editor .margin {
+  background-color: #000000 !important;
+}
+
+.monaco-editor .monaco-editor-background {
+  background-color: #000000 !important;
+}
+
+.monaco-editor .line-numbers {
+  color: #00ff00 !important;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 640px) {
+  .professional-ide {
+    @apply mx-2;
+  }
+
+  .professional-ide-header {
+    @apply p-2;
+  }
+
+  .professional-terminal-content {
+    max-height: 24px;
+  }
+}
+
+/* Terminal Boot Animation */
+.terminal-boot {
+  @apply bg-black text-[#00FF00] p-4 font-mono text-sm;
+  min-height: 200px;
+}
+
+.boot-message {
+  @apply mb-2;
+  animation: fadeInUp 0.3s ease-out forwards;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.boot-message:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.boot-message:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.boot-message:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.boot-message:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.boot-message:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+.boot-cursor {
+  @apply text-[#00FF00] font-mono;
+  animation: blink 1s infinite;
+}
+
+/* Glitch Text Effect */
+.glitch-text {
+  position: relative;
+  text-shadow: 0 0 10px #00ff00;
+}
+
+.animate-glitch {
+  animation: glitch 2s ease-in-out infinite;
+}
+
+/* Matrix Text Effect */
+.matrix-text {
+  font-family: "Courier New", monospace;
+  color: #00ff00;
+  text-shadow: 0 0 5px #00ff00;
+  animation: matrix-fade 3s ease-in-out infinite;
+}
+
+@keyframes matrix-fade {
+  0%,
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 5px #00ff00;
+  }
+  50% {
+    opacity: 0.8;
+    text-shadow: 0 0 15px #00ff00, 0 0 25px #00ff00;
+  }
+}
+
+/* Pulse Glow Effect */
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  }
+  50% {
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1), 0 0 20px rgba(0, 255, 0, 0.5);
+  }
+}
+
+/* Scan Line Effect for Progress Bar */
+.scan-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.scan-line::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00ff00, transparent);
+  animation: scan 2s linear infinite;
+}
+
+@keyframes scan {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Floating App Navigation */
+.floating-nav {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.floating-nav button {
+  transition: all 0.3s ease;
+}
+
+.floating-nav button:hover {
+  transform: translateY(-2px);
+  text-shadow: 0 0 10px currentColor;
+}
+
+.floating-nav button:active {
+  transform: translateY(0);
+}
+
+/* Mobile App Style Navigation */
+.app-nav {
+  @apply fixed bottom-0 left-0 w-full z-50 bg-black bg-opacity-95 border-t-4 border-[#00FF00] p-4;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.app-nav-button {
+  @apply flex flex-col items-center gap-1 text-[#00FF00] hover:text-white transition-all duration-300;
+}
+
+.app-nav-button:hover {
+  transform: translateY(-2px);
+  text-shadow: 0 0 10px currentColor;
+}
+
+.app-nav-button:active {
+  transform: translateY(0);
+}
+
+.app-nav-button .icon {
+  @apply text-2xl;
+  filter: drop-shadow(0 0 5px currentColor);
+}
+
+.app-nav-button .label {
+  @apply text-xs font-mono;
+}
+
+/* Progress Indicators */
+.progress-indicators {
+  @apply flex flex-wrap gap-1 justify-center mt-3;
+}
+
+.progress-indicator {
+  @apply w-3 h-3 rounded-full border-2 transition-all duration-500 relative;
+  animation: none;
+  transform: none;
+}
+
+.progress-indicator.completed {
+  @apply bg-[#00FF00] border-[#00FF00];
+  animation: none;
+  transform: none;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+.progress-indicator.completed::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid #00ff00;
+  border-radius: 50%;
+  animation: none;
+  transform: none;
+  opacity: 0;
+}
+
+.progress-indicator.pending {
+  @apply bg-black border-[#00FF00];
+  animation: none;
+  transform: none;
+}
+
+/* Floating App Navigation - Estilos específicos */
+.app-nav {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 -4px 20px rgba(0, 255, 0, 0.3);
+}
+
+.app-nav button {
+  transition: all 0.3s ease;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.app-nav button:hover {
+  transform: translateY(-3px);
+  text-shadow: 0 0 10px currentColor;
+  background: rgba(0, 255, 0, 0.1);
+}
+
+.app-nav button:active {
+  transform: translateY(-1px);
+}
+
+.app-nav button .icon {
+  filter: drop-shadow(0 0 5px currentColor);
+}
+
+/* Progress Indicators mejorados */
+.progress-indicators .progress-indicator {
+  transition: all 0.3s ease;
+}
+
+.progress-indicators .progress-indicator.completed {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Botones flotantes menú app móvil - compactos y con borde */
+@media (max-width: 640px) {
+  .floating-bottom-menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    left: 0;
+    bottom: 0 !important;
+    position: fixed;
+    z-index: 50;
+    background: rgba(0, 0, 0, 0.95);
+    border-top: 4px solid #00ff00;
+    padding: 0;
+  }
+  .floating-bottom-menu .btn-33 {
+    min-width: 0 !important;
+    width: 33.33vw !important;
+    height: 100% !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    font-size: 1rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #00ff00 !important;
+    background: #000 !important;
+    color: #00ff00 !important;
+    box-shadow: none !important;
+    font-weight: bold;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+  }
+  .floating-bottom-menu .btn-33:hover {
+    background: #00ff00 !important;
+    color: #000 !important;
+    border-color: #00ff00 !important;
+    box-shadow: 0 0 10px #00ff00;
+  }
+  .floating-bottom-menu.only-btn-100 {
+    justify-content: center;
+    align-items: center;
+  }
+  .floating-bottom-menu .btn-100 {
+    width: 90vw !important;
+    height: 44px !important;
+    max-width: 400px;
+    min-width: 120px;
+    border-radius: 8px !important;
+    margin-top: 12px !important;
+    margin-bottom: 12px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem !important;
+    border: 2px solid #00ff00 !important;
+    background: #000 !important;
+    color: #00ff00 !important;
+    box-shadow: none !important;
+    font-weight: bold;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+  }
+  .floating-bottom-menu .btn-100:hover {
+    background: #00ff00 !important;
+    color: #000 !important;
+    border-color: #00ff00 !important;
+    box-shadow: 0 0 10px #00ff00;
+    transform: none !important;
+  }
+  /* Anular transformaciones para botones del menú flotante */
+  .floating-bottom-menu .neobrutal-btn {
+    transform: none !important;
+    transition: background 0.2s, color 0.2s, border 0.2s !important;
+  }
+  .floating-bottom-menu .neobrutal-btn:hover {
+    transform: none !important;
+  }
+  .floating-bottom-menu .neobrutal-btn:active {
+    transform: none !important;
+  }
+}
+
+.matrix-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #00ff00;
+  border-top: 4px solid #111;
+  border-radius: 50%;
+  animation: matrix-spin 1s linear infinite;
+  box-shadow: 0 0 16px #00ff00, 0 0 2px #00ff00 inset;
+  margin: 0 auto;
+}
+@keyframes matrix-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Clase específica para botones de pista - sin movimiento */
+.clue-page-btn {
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+}
+
+.clue-page-btn:hover {
+  transform: none !important;
+}
+
+.clue-page-btn:active {
+  transform: none !important;
+}
+
+.clue-page-btn:focus {
+  transform: none !important;
+}
+
+/* Barras de progreso específicas para HackInterface - estáticas */
+.hack-progress-bar {
+  height: 12px;
+  background: #333;
+  border: 2px solid #00ff00;
+  position: relative;
+  overflow: hidden;
+}
+
+.hack-progress-inner {
+  height: 100%;
+  background: #00ff00;
+  transition: width 0.3s ease;
+  animation: none;
+  transform: none;
+  }
+
+/* Indicadores de pistas estáticos para páginas que no sean HomePage */
+.static-progress-indicators {
+  @apply flex flex-wrap gap-1 justify-center mt-3;
+}
+
+.static-progress-indicator {
+  @apply w-3 h-3 rounded-full border-2 transition-all duration-500 relative;
+  animation: none;
+  transform: none;
+}
+
+.static-progress-indicator.completed {
+  @apply bg-[#00FF00] border-[#00FF00];
+  animation: none;
+  transform: none;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+.static-progress-indicator.pending {
+  @apply bg-black border-[#00FF00];
+  animation: none;
+  transform: none;
+}
