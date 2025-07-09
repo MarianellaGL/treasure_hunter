@@ -79,7 +79,7 @@ const HomePage: React.FC = () => {
                   🎯 <b>Objetivo:</b> Encontrar {clues.length} pistas ocultas
                 </p>
                 <p>
-                  👥 <b>Asistencia:</b> 6 personas
+                  👥 <b>Asistencia:</b> 3 personas
                 </p>
                 <p>
                   ⚡ <b>Dificultad:</b> EXTREMA
