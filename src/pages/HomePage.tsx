@@ -7,8 +7,7 @@ import { motion, animate } from "framer-motion";
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const { clues } = useGameState();
-  const { foundClues, startGame, clearStorage, removeFoundClue } =
-    useGameStore();
+  const { foundClues, startGame, clearStorage } = useGameStore();
   const [animatedProgress, setAnimatedProgress] = useState(0);
 
   const hasProgress = foundClues.length > 0;

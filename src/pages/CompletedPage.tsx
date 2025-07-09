@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useGameStore } from "../store/gameStore";
 import { useGameState } from "../hooks/useGameState";
 
@@ -7,19 +6,9 @@ const BINARIO =
   "01100110 01100101 01101100 01101001 01111010 00100000 01100011 01110101 01101101 01110000 01101100 01100101 01100001 01101110 01111001 01101111 01110011 00101100 00100000 01110100 01100101 00100000 01100001 01101101 01101111";
 
 const CompletedPage: React.FC = () => {
-  const navigate = useNavigate();
   const { clues } = useGameState();
-  const { foundClues, startGame } = useGameStore();
+  const { foundClues } = useGameStore();
   const [decoded, setDecoded] = useState(false);
-
-  const handlePlayAgain = () => {
-    startGame();
-    navigate("/home");
-  };
-
-  const handleBackToHome = () => {
-    navigate("/home");
-  };
 
   const completionPercentage = (foundClues.length / clues.length) * 100;
 
