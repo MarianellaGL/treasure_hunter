@@ -67,7 +67,7 @@ const HomePage: React.FC = () => {
                   pistas encontradas
                 </p>
                 <p>
-                  👥 <b>Asistencia:</b> 6 personas
+                  👥 <b>Asistencia:</b> 3 personas
                 </p>
                 <p>
                   ⚡ <b>Dificultad:</b> EXTREMA
